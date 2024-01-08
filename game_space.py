@@ -1,6 +1,6 @@
 import pygame
-import sys
 from ship import Ship
+from controls import events
 
 def run():
     pygame.init()
@@ -10,10 +10,8 @@ def run():
     ship = Ship(screen)
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-
+        ship.update_ship()
+        events(ship)
         screen.fill(bg_color)
         ship.output()
         pygame.display.flip()
