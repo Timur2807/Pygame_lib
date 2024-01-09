@@ -2,7 +2,7 @@ import pygame
 from ship import Ship
 from controls import events, update, update_bullets
 from pygame.sprite import Group
-import simple_draw
+from ino import Ino
 
 def run():
     pygame.init()
@@ -11,11 +11,12 @@ def run():
     bg_color = (0,0,0)
     ship = Ship(screen)
     bullets = Group()
+    ino = Ino(screen)
 
     while True:
         events(screen, ship, bullets)
         ship.update_ship()
-        update(bg_color, screen, ship, bullets)
+        update(bg_color, screen, ship, ino, bullets)
         update_bullets(bullets)
 
 
