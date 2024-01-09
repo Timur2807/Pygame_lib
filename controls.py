@@ -1,6 +1,7 @@
 import pygame
 import sys
 from bullet import Bullet
+from ino import Ino
 def events(screen, ship, bullets):
     """Обработка событий (нажатие клавиш.)"""
     for event in pygame.event.get():
@@ -21,12 +22,13 @@ def events(screen, ship, bullets):
             elif event.key == pygame.K_LEFT:
                 ship.mleft = False
 
-def update(bg_color, screen, ship, bullets):
+def update(bg_color, screen, ship, inos, bullets):
     """Обновление Экрана."""
     screen.fill(bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.output()
+    inos.draw()
     pygame.display.flip()
 
 def update_bullets(bullets):
@@ -35,3 +37,6 @@ def update_bullets(bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+
+def create_army(screen, inos):
+    """Создаем армию пришельцев"""
