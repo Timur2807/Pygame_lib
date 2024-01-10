@@ -3,10 +3,12 @@ from ship import Ship
 from controls import events, update, update_bullets
 from pygame.sprite import Group
 from ino import Ino
+from setting import Settings
 
 def run():
+    settings = Settings()
     pygame.init()
-    screen = pygame.display.set_mode((800,600))
+    screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
     pygame.display.set_caption('Инопланетное вторжение.')
     bg_color = (0,0,0)
     ship = Ship(screen)
