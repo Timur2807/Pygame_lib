@@ -6,7 +6,7 @@ from ino import Ino
 from setting import Settings
 
 def run():
-    settings = Settings()
+    settings = Settings(screen_width=800, screen_height=600)
     pygame.init()
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
     pygame.display.set_caption('Инопланетное вторжение.')
