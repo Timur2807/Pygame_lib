@@ -4,12 +4,13 @@ class Ship():
     def __init__(self,screen):
         """Инициализация  космического корабля."""
         self.screen = screen
-        self.image = pygame.image.load('images/shop_2.png')
+        self.image = pygame.image.load('images/ship3.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
         self.center = float(self.rect.centerx)
         self.rect.bottom = self.screen_rect.bottom
+        self.ship_height = self.rect.height
         self.mright = False
         self.mleft = False
 
@@ -25,3 +26,7 @@ class Ship():
             self.center -= 1.5
 
         self.rect.centerx = self.center
+
+    def create_ship(self):
+        """Повторно отрисовывает корабль по центру экрана (снизу)"""
+        self.center = self.screen_rect.centerx

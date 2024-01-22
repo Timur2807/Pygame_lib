@@ -1,25 +1,27 @@
-import pygame
 from ship import Ship
-from controls import events, update, update_bullets
+from controls import *
 from pygame.sprite import Group
-from ino import Ino
 from setting import Settings
+from stats import Stats
 
 def run():
-    settings = Settings(screen_width=800, screen_height=600)
+    settings = Settings()
     pygame.init()
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
     pygame.display.set_caption('Инопланетное вторжение.')
     bg_color = (0,0,0)
     ship = Ship(screen)
     bullets = Group()
-    ino = Ino(screen)
+    inos = Group()
+    create_army(screen, inos, settings, ship)
+    stats = Stats()
 
     while True:
         events(screen, ship, bullets)
         ship.update_ship()
-        update(bg_color, screen, ship, ino, bullets)
-        update_bullets(bullets)
+        update(bg_color, screen, ship, inos, bullets)
+        update_bullets(screen, inos, bullets,settings, ship)
+        update_inos(stats, screen, ship, inos, bullets, settings)
 
 
 run()
