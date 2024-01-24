@@ -3,6 +3,7 @@ from controls import *
 from pygame.sprite import Group
 from setting import Settings
 from stats import Stats
+from scores import Scores
 
 def run():
     settings = Settings()
@@ -15,13 +16,16 @@ def run():
     inos = Group()
     create_army(screen, inos, settings, ship)
     stats = Stats()
+    scores = Scores(screen, stats)
+
 
     while True:
         events(screen, ship, bullets)
-        ship.update_ship()
-        update(bg_color, screen, ship, inos, bullets)
-        update_bullets(screen, inos, bullets,settings, ship)
-        update_inos(stats, screen, ship, inos, bullets, settings)
+        if stats.run_game:
+            ship.update_ship()
+            update(bg_color, screen, stats, scores, ship, inos, bullets)
+            update_bullets(screen, stats, scores, inos, bullets, settings, ship)
+            update_inos(stats, screen, ship, inos, bullets, settings)
 
 
 run()

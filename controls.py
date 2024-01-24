@@ -3,6 +3,7 @@ import sys
 from bullet import Bullet
 from ino import Ino
 import time
+from stats import Stats
 def events(screen, ship, bullets):
     """Обработка событий (нажатие клавиш.)"""
     for event in pygame.event.get():
@@ -23,27 +24,33 @@ def events(screen, ship, bullets):
             elif event.key == pygame.K_LEFT:
                 ship.mleft = False
 
-def update(bg_color, screen, ship, inos, bullets):
+def update(bg_color, screen, stats, scores, ship, inos, bullets):
     """Обновление Экрана."""
     screen.fill(bg_color)
+    scores.score_show()
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.output()
     inos.draw(screen)
     pygame.display.flip()
 
-def update_bullets(screen, inos, bullets,settings, ship):
+def update_bullets(screen, stats, scores, inos, bullets,settings, ship):
     """Обновлять позиции пули."""
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     collisions = pygame.sprite.groupcollide(bullets,inos,True,True)
+    if collisions:
+        for inos in collisions.values():
+            stats.score += 10 * len(inos)
+        scores.image_score()
+        chekc_rec_score(stats, scores)
     if len(inos) == 0:
         bullets.empty()
         create_army(screen, inos, settings, ship)
 
-def update_inos(stats, screen, ship,inos, bullets, settings):
+def update_inos(stats, screen, ship, inos, bullets, settings):
     """Обновление позиции пришельцев."""
     inos.update()
     if pygame.sprite.spritecollideany(ship, inos):
@@ -52,12 +59,16 @@ def update_inos(stats, screen, ship,inos, bullets, settings):
 
 def ship_kill(stats, screen, ship, inos, bullets, settings):
     """Столкновение корабля с пришельцами."""
-    stats.ship_left -= 1
-    inos.empty()
-    bullets.empty()
-    create_army(screen, inos, settings, ship)
-    ship.create_ship()
-    time.sleep(2)
+    if stats.ship_left > 0:
+        stats.ship_left -= 1
+        inos.empty()
+        bullets.empty()
+        create_army(screen, inos, settings, ship)
+        ship.create_ship()
+        time.sleep(1)
+    else:
+        stats.run_game = False
+        sys.exit()
 
 def inos_chekc(stats, screen, ship, inos, bullets, settings):
     """Проверка положекния пришельцев."""
@@ -84,3 +95,10 @@ def create_army(screen, inos, settings, ship):
             ino.rect.y = ino.rect.height + ino.rect.height * ino_row
             inos.add(ino)
 
+def chekc_rec_score(stats, scores):
+    """Прверка новых рекордов."""
+    if stats.score > stats.rec_score:
+        stats.rec_score = stats.score
+        scores.image_rec_score()
+        with open('rec_score.txt', 'w') as file2:
+            file2.write(str(stats.rec_score))

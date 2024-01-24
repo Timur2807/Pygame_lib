@@ -19,6 +19,6 @@ class Ino(pygame.sprite.Sprite):
 
     def update(self):
         """Изменение позиции пришельцев по оси У."""
-        self.y += 0.1
+        self.y += 0.08
         self.rect.y = self.y
 
