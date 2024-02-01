@@ -1,4 +1,6 @@
 import pygame.font
+from ship import Ship
+from pygame.sprite import Group
 
 class Scores():
     """Вывод игровой информации."""
@@ -11,6 +13,7 @@ class Scores():
         self.font = pygame.font.SysFont(None,32)
         self.image_score()
         self.image_rec_score()
+        self.image_ships()
 
     def image_score(self):
         """Преобразовывает текст счета в графическое изображение. """
@@ -31,5 +34,17 @@ class Scores():
         """Выводит на экран СЧЕТ."""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.rec_score_img, self.score_rec_rect)
+        self.ships.draw(self.screen)
+
+    def image_ships(self):
+        """Отрисовка количества жизни корабля."""
+        self.ships = Group()
+        for ship_number in range(self.stats.ship_left):
+            ship = Ship(self.screen)
+            ship.rect.x = 15 + ship_number * ship.rect.width
+            ship.rect.y = 20
+            self.ships.add(ship)
+
+
 
 

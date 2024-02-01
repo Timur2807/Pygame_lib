@@ -1,8 +1,10 @@
 import pygame
+from pygame.sprite import Sprite
 
-class Ship():
-    def __init__(self,screen):
-        """Инициализация  космического корабля."""
+class Ship(Sprite):
+    def __init__(self, screen):
+        """Инициализация космического корабля."""
+        super(Ship, self).__init__()
         self.screen = screen
         self.image = pygame.image.load('images/ship3.png')
         self.rect = self.image.get_rect()

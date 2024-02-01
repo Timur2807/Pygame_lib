@@ -10,5 +10,5 @@ class Stats():
 
     def reset_stats(self):
         """Статистика изменяющаяся во время игры."""
-        self.ship_left = 2
+        self.ship_left = 3
         self.score = 0
