@@ -5,6 +5,7 @@ from setting import Settings
 from stats import Stats
 from scores import Scores
 
+
 def run():
     settings = Settings()
     pygame.init()

@@ -3,7 +3,7 @@ import sys
 from bullet import Bullet
 from ino import Ino
 import time
-from stats import Stats
+from stars import Stars
 def events(screen, ship, bullets):
     """Обработка событий (нажатие клавиш.)"""
     for event in pygame.event.get():
@@ -96,6 +96,7 @@ def create_army(screen, inos, settings, ship):
             ino.rect.x = ino.x
             ino.rect.y = ino.rect.height + ino.rect.height * ino_row
             inos.add(ino)
+
 
 def chekc_rec_score(stats, scores):
     """Прверка новых рекордов."""
